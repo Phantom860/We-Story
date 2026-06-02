@@ -1,0 +1,45 @@
+/* 彩色波点背景装饰 */
+body {
+  background-image: 
+    radial-gradient(hsl(340 70% 70%) 2px, transparent 2px),
+    radial-gradient(hsl(250 70% 70%) 2px, transparent 2px),
+    radial-gradient(hsl(160 70% 70%) 2px, transparent 2px),
+    radial-gradient(hsl(45 70% 70%) 2px, transparent 2px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px, 7px 22px, 22px 7px;
+  background-attachment: fixed;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(340 30% 85%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(340 70% 70%);
+}
+
+/* 可爱的选中文本颜色 */
+::selection {
+  background-color: hsl(340 70% 70% / 0.3);
+  color: hsl(340 30% 35%);
+}
+
+/* 动画延迟类 */
+.delay-75 {
+  animation-delay: 75ms;
+}
+
+.delay-150 {
+  animation-delay: 150ms;
+}
