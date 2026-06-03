@@ -235,10 +235,10 @@ export default function DiaryPage() {
           <SelectTrigger className="w-[140px] h-12 border-[3px] border-border shadow-sm font-normal text-lg pt-3 pb-3 mt-1 hover:ring-2 hover:ring-[rgba(236,72,153,0.4)] transition-all duration-100">
             <SelectValue placeholder="全部心情" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="全部">全部心情</SelectItem>
+          <SelectContent className="bg-card border-2 border-border rounded-xl shadow-md">
+            <SelectItem value="全部" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">全部心情</SelectItem>
             {moods.map((mood) => (
-              <SelectItem key={mood} value={mood}>{mood}</SelectItem>
+              <SelectItem key={mood} value={mood} className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">{mood}</SelectItem>
             ))}
           </SelectContent>
         </Select>
@@ -247,10 +247,10 @@ export default function DiaryPage() {
           <SelectTrigger className="w-[120px] h-12 border-[3px] border-border shadow-sm font-normal text-lg pt-3 pb-3 mt-1 hover:ring-2 hover:ring-[rgba(236,72,153,0.4)] transition-all duration-100">
             <SelectValue placeholder="全部标签" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="全部">全部标签</SelectItem>
+          <SelectContent className="bg-card border-2 border-border rounded-xl shadow-md">
+            <SelectItem value="全部" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">全部标签</SelectItem>
             {allTags.map((tag) => (
-              <SelectItem key={tag} value={tag}>{tag}</SelectItem>
+              <SelectItem key={tag} value={tag} className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">{tag}</SelectItem>
             ))}
           </SelectContent>
         </Select>

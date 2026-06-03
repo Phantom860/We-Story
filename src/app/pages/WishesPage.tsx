@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { Star, Plus, TrendingUp, X } from 'lucide-react';
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from '../components/ui/select';
 
 interface IWish {
   id: string;
@@ -259,29 +260,31 @@ export default function WishesPage() {
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-sm font-bold text-muted-foreground">优先级:</span>
-          <select
-            value={priorityFilter}
-            onChange={(e) => setPriorityFilter(e.target.value)}
-            className="bg-card border-2 border-border rounded-xl px-4 py-2 text-sm font-medium hover:ring-2 hover:ring-primary/30 transition-all cursor-pointer"
-          >
-            <option value="all">全部</option>
-            <option value="high">高优先级</option>
-            <option value="medium">中优先级</option>
-            <option value="low">低优先级</option>
-          </select>
+          <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+            <SelectTrigger className="w-[140px] h-12 border-[3px] border-border shadow-sm font-normal text-lg pt-3 pb-3 mt-1 hover:ring-2 hover:ring-[rgba(236,72,153,0.4)] transition-all duration-100">
+              <SelectValue placeholder="全部" />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-2 border-border rounded-xl shadow-md">
+              <SelectItem value="all" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">全部</SelectItem>
+              <SelectItem value="high" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">高优先级</SelectItem>
+              <SelectItem value="medium" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">中优先级</SelectItem>
+              <SelectItem value="low" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">低优先级</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-sm font-bold text-muted-foreground">分类:</span>
-          <select
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            className="bg-card border-2 border-border rounded-xl px-4 py-2 text-sm font-medium hover:ring-2 hover:ring-primary/30 transition-all cursor-pointer"
-          >
-            <option value="all">全部</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>{category}</option>
-            ))}
-          </select>
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="w-[140px] h-12 border-[3px] border-border shadow-sm font-normal text-lg pt-3 pb-3 mt-1 hover:ring-2 hover:ring-[rgba(236,72,153,0.4)] transition-all duration-100">
+              <SelectValue placeholder="全部" />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-2 border-border rounded-xl shadow-md">
+              <SelectItem value="all" className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">全部</SelectItem>
+              {categories.map((category) => (
+                <SelectItem key={category} value={category} className="text-lg px-4 py-2 hover:bg-primary/10 cursor-pointer transition-colors">{category}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
