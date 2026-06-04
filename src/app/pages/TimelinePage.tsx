@@ -12,7 +12,29 @@ interface ITimelineEvent {
   isHighlight?: boolean;
 }
 
+interface IAnniversary {
+  id: string;
+  name: string;
+  date: string;
+  cycle: 'yearly' | 'monthly' | 'once';
+  description: string;
+}
+
+// 计算从某个日期到今天的天数
+function calculateDaysSince(dateStr: string): number {
+  const date = new Date(dateStr);
+  const today = new Date();
+  const diffTime = today.getTime() - date.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  return Math.max(0, diffDays);
+}
+
 export default function TimelinePage() {
+  const [anniversaries, setAnniversaries] = useState<IAnniversary[]>(() => {
+    const saved = localStorage.getItem('__global_friendship_anniversaries');
+    return saved ? JSON.parse(saved) : [];
+  });
+  
   const [events, setEvents] = useState<ITimelineEvent[]>(() => {
     const saved = localStorage.getItem('__global_friendship_timeline');
     return saved ? JSON.parse(saved) : [
@@ -68,6 +90,10 @@ export default function TimelinePage() {
     new Date(a.date).getTime() - new Date(b.date).getTime()
   );
 
+  // 获取相识纪念日并计算相识天数
+  const meetingAnniversary = anniversaries.find(a => a.name === '相识纪念日');
+  const daysSinceMet = meetingAnniversary ? calculateDaysSince(meetingAnniversary.date) : 0;
+
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'meeting':
@@ -110,7 +136,7 @@ export default function TimelinePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="text-center">
             <div className="text-sm text-muted-foreground mb-1">相识天数</div>
-            <div className="text-3xl font-bold text-primary">365</div>
+            <div className="text-3xl font-bold text-primary">{daysSinceMet}</div>
           </div>
           <div className="text-center">
             <div className="text-sm text-muted-foreground mb-1">重要事件</div>

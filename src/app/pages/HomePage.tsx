@@ -2,25 +2,50 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { Heart, BookOpen, Calendar, Star, Image, CheckSquare, TrendingUp } from 'lucide-react';
 
+interface IAnniversary {
+  id: string;
+  name: string;
+  date: string;
+  cycle: 'yearly' | 'monthly' | 'once';
+  description: string;
+}
+
 interface IStats {
-  daysSinceMet: number;
   diaryCount: number;
   wishCompletionRate: number;
   checklistCompletionRate: number;
   nextAnniversaryDays: number;
 }
 
+// 计算从某个日期到今天的天数
+function calculateDaysSince(dateStr: string): number {
+  const date = new Date(dateStr);
+  const today = new Date();
+  const diffTime = today.getTime() - date.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  return Math.max(0, diffDays);
+}
+
 export default function HomePage() {
+  const [anniversaries, setAnniversaries] = useState<IAnniversary[]>(() => {
+    const saved = localStorage.getItem('__global_friendship_anniversaries');
+    return saved ? JSON.parse(saved) : [];
+  });
+  
   const [stats, setStats] = useState<IStats>(() => {
     const saved = localStorage.getItem('__global_friendship_stats');
     return saved ? JSON.parse(saved) : {
-      daysSinceMet: 365,
       diaryCount: 12,
       wishCompletionRate: 60,
       checklistCompletionRate: 75,
       nextAnniversaryDays: 15
     };
   });
+
+  // 获取相识纪念日
+  const meetingAnniversary = anniversaries.find(a => a.name === '相识纪念日');
+  // 计算相识天数
+  const daysSinceMet = meetingAnniversary ? calculateDaysSince(meetingAnniversary.date) : 0;
 
   useEffect(() => {
     localStorage.setItem('__global_friendship_stats', JSON.stringify(stats));
@@ -38,7 +63,7 @@ export default function HomePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-card border-2 border-border rounded-3xl p-6 shadow hover:-translate-y-2 hover:shadow-lg hover:rotate-1 transition-all duration-300">
           <div className="text-sm text-muted-foreground mb-2">相识天数</div>
-          <div className="text-5xl font-bold text-primary">{stats.daysSinceMet}</div>
+          <div className="text-5xl font-bold text-primary">{daysSinceMet}</div>
           <div className="text-sm text-muted-foreground mt-2">天</div>
         </div>
 
